@@ -1,0 +1,31 @@
+td{
+    width: 150px;
+    height: 150px;
+    border: solid 2px white;
+    font-size: xx-large;
+    text-align: center;
+    background-color: black;
+    color: red;
+
+
+
+    
+}
+
+table{
+    margin-left: 500px;
+    margin-top: 100px;
+    border-collapse: collapse;
+}
+
+#heading{
+    text-align: center;
+}
+
+body{
+    background-color: aqua;
+}
+
+#win{
+    text-align: center;
+}
