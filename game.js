@@ -7,24 +7,28 @@ let pa = document.getElementById("win")
 let div = document.getElementById("window")
 let Message = document.getElementById("Message")
 let retry = document.getElementById("retry")
-grids.forEach(ele => {
-    ele.addEventListener("click", function() {
-        if (turn % 2 == 0 && ele.innerHTML == "") {
-            ele.innerHTML = player;
-            turn += 1;
-            if (!checkForWinner() && !isBoardFull()) {
-                aiMove();
-                gamecheckstate()
-            }
-            else{
-                setTimeout(function(){
-                     div.style.visibility="visible";
-                     Message.textContent="Match is Drawn"
-                },500)
-            }
+
+function handleClick(){
+    if (turn % 2 == 0 && this.innerHTML == "") {
+        this.innerHTML = player;
+        turn += 1;
+        if (!checkForWinner() && !isBoardFull()) {
+            aiMove();
+            gamecheckstate();
+        } else {
+            setTimeout(function () {
+                div.style.visibility = "visible";
+                Message.textContent = "Match is Drawn";
+            }, 500);
         }
-    });
-});
+    }
+}
+
+grids.forEach(ele=>{
+
+ele.addEventListener("click",handleClick)
+})
+
 
 function aiMove() {
     let bestMove = findBestMove();
@@ -121,6 +125,30 @@ function checkForWinner() {
 
 
 
+function drawLine(a,b,c) {
+    let line = document.createElement("div");
+    line.className = "line";
+    let cellA = grids[a].getBoundingClientRect();
+    let cellC = grids[c].getBoundingClientRect();
+    
+    let table = document.querySelector("table").getBoundingClientRect();
+    let angle = Math.atan2(cellC.top - cellA.top, cellC.left - cellA.left) * 180 / Math.PI;
+    let length = Math.sqrt((cellC.left - cellA.left) ** 2 + (cellC.top - cellA.top) ** 2);
+    
+    line.style.width = `${length}px`;
+    line.style.top = `${cellA.top + cellA.height / 2 - table.top - 2.5}px`;
+    line.style.left = `${cellA.left + cellA.width / 2 - table.left}px`;
+    line.style.transform = `rotate(${angle}deg)`;
+    
+    document.querySelector("table").appendChild(line);
+   setTimeout(()=>{
+    line.remove()
+   },1000)
+    
+}
+
+
+
 
 
 function gamecheckstate(){
@@ -135,18 +163,26 @@ function gamecheckstate(){
         let [a, b, c] = condition;
         if (grids[a].innerHTML === grids[b].innerHTML && grids[b].innerHTML === grids[c].innerHTML) {
             if (grids[a].innerHTML === ai){
+                drawLine(a,b,c)
+                grids.forEach(ele=>{
+                    ele.removeEventListener("click",handleClick)
+                })
                 setTimeout(function(){
                     div.style.visibility="visible";
                     Message.textContent="AI has won"
                     
-                },500)
+                },1000)
                 
             }
             if (grids[a].innerHTML === player){
+                drawLine(a,b,c)
+                grids.forEach(ele=>{
+                    ele.removeEventListener("click",handleClick)
+                })
                 setTimeout(function(){
                     div.style.visibility="visible";
                     Message.textContent="Player has won"
-                },500)
+                },1000)
                  
 
             }

@@ -1,7 +1,29 @@
+.line {
+    position:absolute;
+    margin-top: 160px;
+    margin-left: 500px;
+    background-color: red;
+    height: 5px;
+    z-index: 1;
+    transform-origin: left;
+    animation: draw 0.5s ease-in-out;
+}
+
+@keyframes draw {
+    from {
+        width: 0;
+    }
+    to {
+        width: 20%;
+    }
+}
+
+
 td{
+    position: relative;
     width: 150px;
     height: 150px;
-    border: solid 2px white;
+    border: solid 1px white;
     font-size: xx-large;
     text-align: center;
     background-color: black;
