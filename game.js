@@ -4,6 +4,9 @@ let turn = 0;
 let player = "X";
 let ai = "O";
 let pa = document.getElementById("win")
+let div = document.getElementById("window")
+let Message = document.getElementById("Message")
+let retry = document.getElementById("retry")
 grids.forEach(ele => {
     ele.addEventListener("click", function() {
         if (turn % 2 == 0 && ele.innerHTML == "") {
@@ -14,7 +17,10 @@ grids.forEach(ele => {
                 gamecheckstate()
             }
             else{
-                pa.innerHTML="Match has Drawn"
+                setTimeout(function(){
+                     div.style.visibility="visible";
+                     Message.textContent="Match is Drawn"
+                },500)
             }
         }
     });
@@ -129,14 +135,26 @@ function gamecheckstate(){
         let [a, b, c] = condition;
         if (grids[a].innerHTML === grids[b].innerHTML && grids[b].innerHTML === grids[c].innerHTML) {
             if (grids[a].innerHTML === ai){
-                pa.textContent="AI has won"
+                setTimeout(function(){
+                    div.style.visibility="visible";
+                    Message.textContent="AI has won"
+                    
+                },500)
                 
             }
             if (grids[a].innerHTML === player){
-                pa.textContent="Player has won"
+                setTimeout(function(){
+                    div.style.visibility="visible";
+                    Message.textContent="Player has won"
+                },500)
+                 
 
             }
         }
     }
     return 0;
 }
+
+retry.addEventListener("click",function(){
+    location.reload()
+})
